@@ -1,0 +1,11 @@
+GET 1
+SET 1 A
+GET 1
+set 10 B
+cosa
+GET 10
+set 10 NUEVO
+DELETE 1
+GET 1
+GET 10
+DELETE 10
