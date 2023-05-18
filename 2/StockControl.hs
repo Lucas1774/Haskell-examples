@@ -21,15 +21,15 @@ createStock = ROOTNODE[]
 
 retrieveStock :: Stock -> String -> Int
 retrieveStock (ROOTNODE []) _ = -1 --empty -> do not bother
-retrieveStock (ROOTNODE children) string = retrieveStock children string --not empty -> operate with children
+retrieveStock (ROOTNODE children) string = retrieveStock' children string --not empty -> operate with children
   where
-    retrieveStock :: [Stock] -> String -> Int
-    retrieveStock (INFONODE n:[]) "" = n --found end -> get value
-    retrieveStock (INNERNODE c children:rest) (x:xs) --inner node -> check if match
-      | c == x = retrieveStock children xs --found match -> go deeper
-      | c < x = retrieveStock rest (x:xs) --explore level -> go wider
+    retrieveStock' :: [Stock] -> String -> Int
+    retrieveStock' (INFONODE n:[]) "" = n --found end -> get value
+    retrieveStock' (INNERNODE c children:rest) (x:xs) --inner node -> check if match
+      | c == x = retrieveStock' children xs --found match -> go deeper
+      | c < x = retrieveStock' rest (x:xs) --explore level -> go wider
       | otherwise = -1 --not found
-    retrieveStock _ _ = -1 --default not found
+    retrieveStock' _ _ = -1 --default not found
 
 
 -------------------------
