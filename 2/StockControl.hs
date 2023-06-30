@@ -44,8 +44,8 @@ updateStock :: Stock -> String -> Int -> Stock
 updateStock (ROOTNODE children) string value = ROOTNODE (updateStock' children string value) --operate with children
   where
     updateStock' :: [Stock] -> String -> Int -> [Stock]
-    updateStock' [] "" value = [INFONODE value] --found end -> create infonode
     updateStock' (INFONODE _ : rest) "" value = INFONODE value : rest --a different end -> update infonode, keep siblings-
+    updateStock' stocks "" value = (INFONODE value):stocks --found end -> create infonode
     updateStock' [] (x:xs) value = [INNERNODE x (updateStock' [] xs value)] --dead end -> create innernode and go deeper
     updateStock' (INNERNODE c children : rest) (x:xs) value --inner node -> check if match
       | c == x = INNERNODE c (updateStock' children xs value) : rest --found match -> go deeper
