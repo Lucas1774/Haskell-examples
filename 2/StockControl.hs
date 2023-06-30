@@ -24,7 +24,8 @@ retrieveStock (ROOTNODE []) _ = -1 --empty -> do not bother
 retrieveStock (ROOTNODE children) string = retrieveStock' children string --not empty -> operate with children
   where
     retrieveStock' :: [Stock] -> String -> Int
-    retrieveStock' (INFONODE n:[]) "" = n --found end -> get value
+    retrieveStock' (INFONODE n:rest) "" = n --found end -> get value
+    retrieveStock' (INFONODE n:rest) s = retrieveStock' rest s -- info node but not the correct one -> go wider
     retrieveStock' (INNERNODE c children:rest) (x:xs) --inner node -> check if match
       | c == x = retrieveStock' children xs --found match -> go deeper
       | c < x = retrieveStock' rest (x:xs) --explore level -> go wider
